@@ -1,0 +1,130 @@
+﻿@model ML.Historial
+
+@{
+    ViewBag.Title = "Historial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2> Historial</h2>
+        </div>
+    </div>
+    @using (Html.BeginForm("His", "Historial", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">
+                    <div hidden>
+                        @Html.LabelFor(model => model.Usuario.IdUsuario)
+                        @Html.TextBoxFor(moedel => Model.Usuario.IdUsuario, new { @class = "form-control", autocomplete = "off" })
+                        @Html.ValidationMessageFor(model => model.Usuario.IdUsuario)
+                        @*hidden*@
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.SuperDigito.Numero)
+
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">@@</span>
+                        @Html.TextBoxFor(model => model.SuperDigito.Numero, new { @class = "form-control", @id = "txtNumero" })
+                    </div>
+
+                    @Html.ValidationMessageFor(model => model.SuperDigito.Numero)
+                </div>
+            </div>
+            @if (Model.SuperDigito.Resultado == 0)
+            {
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.SuperDigito.Resultado, new { @style = "display: none" })
+
+                        <div class="input-group">
+                            @Html.TextBoxFor(model => model.SuperDigito.Resultado, new { @class = "form-control", @style = "display: none" })
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.SuperDigito.Resultado)
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.SuperDigito.Resultado)
+
+                        <div class="input-group">
+                            <span class="input-group-addon" id="basic-addon1">@@</span>
+                            @Html.TextBoxFor(model => model.SuperDigito.Resultado, new { @class = "form-control" })
+                        </div>
+
+                        @Html.ValidationMessageFor(model => model.SuperDigito.Resultado)
+                    </div>
+                </div>
+            }
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    <input type="submit" value="Calcular" class="btn btn-success" /><br><br>
+                </div>
+            </div>
+        </div>
+
+    }
+    @if (Model.Historiales.Count > 0)
+    {
+        <div class="row">
+            <br>  <br><br>
+            <div class="col-md-12">
+                <table class="table table-bordered table-responsive">
+
+                    <thead>
+                        <tr class="text-center">
+                            <td class="hidden">IdHistorial</td>
+                            <td>Numero</td>
+                            <td>Resultado</td>
+                            <td>Fecha</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Historial historial in Model.Historiales)
+                        {
+                            <tr class="text-center">
+                                <td class="hidden">@historial.Usuario.IdUsuario </td>
+                                <td class="hidden">@historial.SuperDigito.IdSuperDigito</td>
+                                <td class="hidden">@historial.IdHistorial </td>
+                                <td>@historial.SuperDigito.Numero</td>
+                                <td>@historial.SuperDigito.Resultado</td>
+                                <td>@historial.SuperDigito.Fecha</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-3">
+                <a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Historial", new { IdUsuario= Model.Usuario.IdUsuario})" onclick="return confirm('Estas seguro que deseas eliminar tu historial?')"></a>
+            </div>
+        </div>
+        
+    }
+    else
+    {
+        <div class="row">
+            <br>  <br><br>  <br><br>  <br>
+            <div class="col-md-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros sobre SuperDigitos
+                </div>
+            </div>
+        </div>
+    }
+</div>
+</div>

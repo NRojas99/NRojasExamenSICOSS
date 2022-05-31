@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ExamenSICOSSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdHistorial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdUsuario" Type="int" />
+          <Property Name="IdSuperDigito" Type="int" />
+        </EntityType>
+        <EntityType Name="SuperDigito">
+          <Key>
+            <PropertyRef Name="IdSuperDigito" />
+          </Key>
+          <Property Name="IdSuperDigito" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Numero" Type="int" />
+          <Property Name="Resultado" Type="int" />
+          <Property Name="Fecha" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserName" Type="varchar" MaxLength="50" />
+          <Property Name="Password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Historial__IdSup__300424B4">
+          <End Role="SuperDigito" Type="Self.SuperDigito" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuperDigito">
+              <PropertyRef Name="IdSuperDigito" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="IdSuperDigito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__IdUsu__2F10007B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="AddHistorial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+          <Parameter Name="IdSuperDigito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddSuperDigito" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSuperDigito" Type="int" Mode="InOut" />
+          <Parameter Name="Numero" Type="int" Mode="In" />
+          <Parameter Name="Resultado" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AddUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+          <Parameter Name="Password" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="DeleteHistorialIdUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetUsername" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Username" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="IdSuperDigitoGetResultado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdSuperDigito" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IdUsuarioGetHistorial" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="IdUsuarioGetNumero" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdUsuario" Type="int" Mode="In" />
+        </Function>
+        <Function Name="UpdateFecha" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Numero" Type="int" Mode="In" />
+          <Parameter Name="IdSuperdigito" Type="int" Mode="In" />
+        </Function>
+        <EntityContainer Name="ExamenSICOSSModelStoreContainer">
+          <EntitySet Name="Historial" EntityType="Self.Historial" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SuperDigito" EntityType="Self.SuperDigito" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Historial__IdSup__300424B4" Association="Self.FK__Historial__IdSup__300424B4">
+            <End Role="SuperDigito" EntitySet="SuperDigito" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__IdUsu__2F10007B" Association="Self.FK__Historial__IdUsu__2F10007B">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Historial" EntitySet="Historial" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ExamenSICOSSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Historial">
+          <Key>
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdHistorial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdUsuario" Type="Int32" />
+          <Property Name="IdSuperDigito" Type="Int32" />
+          <NavigationProperty Name="SuperDigito" Relationship="Self.FK__Historial__IdSup__300424B4" FromRole="Historial" ToRole="SuperDigito" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK__Historial__IdUsu__2F10007B" FromRole="Historial" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="SuperDigito">
+          <Key>
+            <PropertyRef Name="IdSuperDigito" />
+          </Key>
+          <Property Name="IdSuperDigito" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Numero" Type="Int32" />
+          <Property Name="Resultado" Type="Int32" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Historials" Relationship="Self.FK__Historial__IdSup__300424B4" FromRole="SuperDigito" ToRole="Historial" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Historials" Relationship="Self.FK__Historial__IdUsu__2F10007B" FromRole="Usuario" ToRole="Historial" />
+        </EntityType>
+        <Association Name="FK__Historial__IdSup__300424B4">
+          <End Role="SuperDigito" Type="Self.SuperDigito" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SuperDigito">
+              <PropertyRef Name="IdSuperDigito" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="IdSuperDigito" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historial__IdUsu__2F10007B">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Historial">
+              <PropertyRef Name="IdUsuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ExamenSICOSSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Historials" EntityType="Self.Historial" />
+          <EntitySet Name="SuperDigitoes" EntityType="Self.SuperDigito" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK__Historial__IdSup__300424B4" Association="Self.FK__Historial__IdSup__300424B4">
+            <End Role="SuperDigito" EntitySet="SuperDigitoes" />
+            <End Role="Historial" EntitySet="Historials" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historial__IdUsu__2F10007B" Association="Self.FK__Historial__IdUsu__2F10007B">
+            <End Role="Usuario" EntitySet="Usuarios" />
+            <End Role="Historial" EntitySet="Historials" />
+          </AssociationSet>
+          <FunctionImport Name="AddHistorial">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+            <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetUsername" ReturnType="Collection(ExamenSICOSSModel.GetUsername_Result)">
+          <Parameter Name="Username" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IdUsuarioGetHistorial" ReturnType="Collection(ExamenSICOSSModel.IdUsuarioGetHistorial_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddSuperDigito">
+            <Parameter Name="IdSuperDigito" Mode="InOut" Type="Int32" />
+            <Parameter Name="Numero" Mode="In" Type="Int32" />
+            <Parameter Name="Resultado" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AddUsuario">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+            <Parameter Name="Password" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="IdSuperDigitoGetResultado" ReturnType="Collection(ExamenSICOSSModel.IdSuperDigitoGetResultado_Result1)">
+          <Parameter Name="IdSuperDigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="IdUsuarioGetNumero" ReturnType="Collection(ExamenSICOSSModel.IdUsuarioGetNumero_Result)">
+          <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="UpdateFecha">
+            <Parameter Name="Numero" Mode="In" Type="Int32" />
+            <Parameter Name="IdSuperdigito" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="DeleteHistorialIdUsuario">
+            <Parameter Name="IdUsuario" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="GetUsername_Result">
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="String" Name="UserName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Password" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="IdUsuarioGetHistorial_Result">
+          <Property Type="Int32" Name="IdHistorial" Nullable="false" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="Int32" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Numero" Nullable="true" />
+          <Property Type="Int32" Name="Resultado" Nullable="true" />
+          <Property Type="DateTime" Name="Fecha" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="IdSuperDigitoGetResultado_Result">
+          <Property Type="Int32" Name="IdHistorial" Nullable="false" />
+          <Property Type="Int32" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Resultado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="IdSuperDigitoGetResultado_Result1">
+          <Property Type="Int32" Name="IdHistorial" Nullable="false" />
+          <Property Type="Int32" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Numero" Nullable="true" />
+          <Property Type="Int32" Name="Resultado" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="IdUsuarioGetNumero_Result">
+          <Property Type="Int32" Name="IdHistorial" Nullable="false" />
+          <Property Type="Int32" Name="IdUsuario" Nullable="false" />
+          <Property Type="Int32" Name="IdSuperDigito" Nullable="false" />
+          <Property Type="Int32" Name="Numero" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ExamenSICOSSModelStoreContainer" CdmEntityContainer="ExamenSICOSSEntities">
+          <EntitySetMapping Name="Historials">
+            <EntityTypeMapping TypeName="ExamenSICOSSModel.Historial">
+              <MappingFragment StoreEntitySet="Historial">
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SuperDigitoes">
+            <EntityTypeMapping TypeName="ExamenSICOSSModel.SuperDigito">
+              <MappingFragment StoreEntitySet="SuperDigito">
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="ExamenSICOSSModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="AddHistorial" FunctionName="ExamenSICOSSModel.Store.AddHistorial" />
+          <FunctionImportMapping FunctionImportName="GetUsername" FunctionName="ExamenSICOSSModel.Store.GetUsername">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenSICOSSModel.GetUsername_Result">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IdUsuarioGetHistorial" FunctionName="ExamenSICOSSModel.Store.IdUsuarioGetHistorial">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenSICOSSModel.IdUsuarioGetHistorial_Result">
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AddSuperDigito" FunctionName="ExamenSICOSSModel.Store.AddSuperDigito" />
+          <FunctionImportMapping FunctionImportName="AddUsuario" FunctionName="ExamenSICOSSModel.Store.AddUsuario" />
+          <FunctionImportMapping FunctionImportName="IdSuperDigitoGetResultado" FunctionName="ExamenSICOSSModel.Store.IdSuperDigitoGetResultado">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenSICOSSModel.IdSuperDigitoGetResultado_Result1">
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Resultado" ColumnName="Resultado" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="IdUsuarioGetNumero" FunctionName="ExamenSICOSSModel.Store.IdUsuarioGetNumero">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ExamenSICOSSModel.IdUsuarioGetNumero_Result">
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdSuperDigito" ColumnName="IdSuperDigito" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="UpdateFecha" FunctionName="ExamenSICOSSModel.Store.UpdateFecha" />
+          <FunctionImportMapping FunctionImportName="DeleteHistorialIdUsuario" FunctionName="ExamenSICOSSModel.Store.DeleteHistorialIdUsuario" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram DiagramId="24e2161ff33e48efa19b2eb27192a8c5" Name="Diagram1">
+        <EntityTypeShape EntityType="ExamenSICOSSModel.Historial" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamenSICOSSModel.SuperDigito" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ExamenSICOSSModel.Usuario" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="ExamenSICOSSModel.FK__Historial__IdSup__300424B4" ManuallyRouted="false" />
+        <AssociationConnector Association="ExamenSICOSSModel.FK__Historial__IdUsu__2F10007B" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
